@@ -1,6 +1,7 @@
 import React from "react";
-import { Slot } from "expo-router";
+import { Slot, Stack, Tabs } from "expo-router";
+import { Drawer } from "expo-router/drawer";
 
 export default function Layout() {
-  return <Slot />;
+  return <Drawer />;
 }

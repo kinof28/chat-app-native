@@ -7,9 +7,11 @@ export default function User() {
   return (
     <View className="bg-slate-900 justify-center items-center flex-1">
       <Text className="text-white text-3xl">User: {id}</Text>
-      <View className="bg-zinc-300 p-5 ">
-        <Link href="/">Go Back</Link>
-      </View>
+      <Link href="/">
+        <View className="bg-zinc-300 p-5 mb-5">
+          <Text>Go Back</Text>
+        </View>
+      </Link>
     </View>
   );
 }
