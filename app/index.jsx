@@ -7,7 +7,7 @@ export default function index() {
     <View className="bg-slate-900 justify-center items-center flex-1">
       <Text className="text-white text-3xl">Home </Text>
       <View className="bg-zinc-300 p-5 mb-5">
-        <Link href="/about">About</Link>
+        <Link href="/auth">Auth</Link>
       </View>
       <View className="bg-zinc-300 p-5 mb-5">
         <Link href="/user/5">User</Link>
