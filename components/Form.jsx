@@ -1,15 +1,29 @@
-import { View, Text, KeyboardAvoidingView, TextInput } from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  KeyboardAvoidingView,
+  TextInput,
+  TouchableHighlight,
+} from "react-native";
 
 export default function Form(props) {
-  //   const value = props.value;
   return (
-    <KeyboardAvoidingView classname=" bg-green-800 border-red-700 border-4 p-2">
+    <KeyboardAvoidingView className="p-4 border-2">
       <TextInput
-        classname="text-white placeholder:text-white"
+        className="text-white p-4 border-2"
         placeholder="Email Address"
         placeholderTextColor={"white"}
       />
+      <TextInput
+        className="text-white p-2 border-red-600 border-2"
+        placeholder="Password"
+        placeholderTextColor={"white"}
+        textContentType="password"
+        secureTextEntry={true}
+      />
+      <TouchableHighlight>
+        <Text className="">Login</Text>
+      </TouchableHighlight>
     </KeyboardAvoidingView>
   );
 }
