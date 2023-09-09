@@ -23,10 +23,10 @@ export default function index() {
             style={{ borderBottomLeftRadius: 50, borderBottomRightRadius: 50 }}
           >
             <Text
-              style={{
-                fontFamily: "original-Surfer",
-              }}
-              className="text-4xl uppercase"
+              // style={{
+              //   fontFamily: "original-Surfer",
+              // }}
+              className="text-4xl uppercase font-bold"
             >
               Messengee
             </Text>
