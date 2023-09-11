@@ -29,8 +29,12 @@ export default function Auth() {
     setError("");
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
-        console.log("user credentials: ", userCredentials);
-        router.replace("/chat");
+        router.replace({
+          pathname: "/chat",
+          params: {
+            user: JSON.stringify(userCredentials),
+          },
+        });
       })
       .catch((error) => {
         setError(error.code);
@@ -47,8 +51,12 @@ export default function Auth() {
     setError("");
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
-        console.log("user credentials: ", userCredentials);
-        router.replace("/chat");
+        router.replace({
+          pathname: "/chat",
+          params: {
+            user: JSON.stringify(userCredentials),
+          },
+        });
       })
       .catch((error) => {
         setError(error.code);
