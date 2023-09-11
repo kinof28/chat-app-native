@@ -7,31 +7,55 @@ import {
   TouchableHighlight,
 } from "react-native";
 import React, { useState } from "react";
-import { Link, useLocalSearchParams } from "expo-router";
+import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import { Shadow } from "react-native-shadow-2";
 import { auth } from "../../config/firebase.config";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-// import Constants from "expo-constants";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 export default function Auth() {
   const { login } = useLocalSearchParams();
   const [loginState, setLoginState] = useState(login === "true");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const router = useRouter();
   const onLogin = () => {
-    console.log("login: ", email, " -- ", password);
+    setIsLoading(true);
+    setError("");
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredentials) => {
+        console.log("user credentials: ", userCredentials);
+        router.replace("/chat");
+      })
+      .catch((error) => {
+        setError(error.code);
+        console.log(error.message);
+        console.log({ ...error });
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const onSubscribe = () => {
+    setIsLoading(true);
+    setError("");
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
         console.log("user credentials: ", userCredentials);
+        router.replace("/chat");
       })
       .catch((error) => {
-        console.error(error);
+        setError(error.code);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-    // console.log(Constants);
   };
   const toggleLogin = () => {
     setLoginState(!loginState);
@@ -55,9 +79,10 @@ export default function Auth() {
             borderTopRightRadius: 60,
           }}
         >
-          <Text className="text-4xl my-16 font-bold">
-            {loginState ? "Login" : "Subscribe"}{" "}
+          <Text className="text-4xl pb-2 font-bold">
+            {loginState ? "Login" : "Subscribe"}
           </Text>
+          <Text className="text-red-400 text-xs font-bold pb-8">{error}</Text>
           <TextInput
             placeholder="Email Address"
             autoCapitalize={"none"}
@@ -71,14 +96,25 @@ export default function Auth() {
             className="p-3 border-[1px] w-full border-neutral-200"
             onChangeText={setPassword}
           />
-          <TouchableOpacity onPress={loginState ? onLogin : onSubscribe}>
+          <TouchableOpacity
+            onPress={loginState ? onLogin : onSubscribe}
+            disabled={isLoading}
+          >
             <Shadow distance={10} offset={[5, 2]}>
               <LinearGradient
                 className="w-56 items-center p-2"
                 style={{
                   borderRadius: 50,
                 }}
-                colors={["rgb(0, 255, 255)", "rgb(30, 80, 255)"]}
+                colors={
+                  isLoading
+                    ? ["#fff", "#000"]
+                    : [
+                        "rgb(0, 255, 255)",
+                        "rgb(20, 200, 255)",
+                        "rgb(30, 80, 255)",
+                      ]
+                }
               >
                 <Text className="text-3xl font-bold text-white">
                   {loginState ? "Login" : "Register"}
