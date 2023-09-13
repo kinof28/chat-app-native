@@ -10,10 +10,7 @@ export default function index() {
   const [fontsLoaded, fontError] = useFonts({
     "original-Surfer": require("../assets/fonts/OriginalSurfer-Regular.ttf"),
   });
-  console.log(auth.currentUser);
-  useEffect(() => {
-    console.log("effect: ", auth.currentUser);
-  }, []);
+
   return (
     <View className="flex-1">
       <View className="min-h-[60%]  -mb-24 w-full z-30 ">
