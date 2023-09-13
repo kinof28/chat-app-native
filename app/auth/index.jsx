@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  useColorScheme,
-  TextInput,
-  TouchableOpacity,
-  TouchableHighlight,
-} from "react-native";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
@@ -15,6 +8,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import Chat from "../chat";
 
 export default function Auth() {
   const { login } = useLocalSearchParams();
@@ -24,22 +18,13 @@ export default function Auth() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
+
   const onLogin = () => {
     setIsLoading(true);
     setError("");
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredentials) => {
-        router.replace({
-          pathname: "/chat",
-          params: {
-            user: JSON.stringify(userCredentials),
-          },
-        });
-      })
       .catch((error) => {
         setError(error.code);
-        console.log(error.message);
-        console.log({ ...error });
       })
       .finally(() => {
         setIsLoading(false);
@@ -50,14 +35,6 @@ export default function Auth() {
     setIsLoading(true);
     setError("");
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredentials) => {
-        router.replace({
-          pathname: "/chat",
-          params: {
-            user: JSON.stringify(userCredentials),
-          },
-        });
-      })
       .catch((error) => {
         setError(error.code);
       })
@@ -68,9 +45,9 @@ export default function Auth() {
   const toggleLogin = () => {
     setLoginState(!loginState);
   };
-  return (
+  return auth.currentUser === null ? (
     <LinearGradient
-      className="justify-end items-center flex-1 relative"
+      className="justify-end items-center flex-1"
       colors={["rgb(0, 255, 255)", "rgb(20, 200, 255)", "rgb(30, 80, 255)"]}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 0.3 }}
@@ -143,15 +120,8 @@ export default function Auth() {
           </TouchableOpacity>
         </View>
       </Shadow>
-      <Link
-        href="/"
-        className="absolute top-20 left-0 p-5 bg-green-700 rounded-full"
-        asChild
-      >
-        <TouchableOpacity>
-          <Text>Go Back</Text>
-        </TouchableOpacity>
-      </Link>
     </LinearGradient>
+  ) : (
+    <Chat />
   );
 }

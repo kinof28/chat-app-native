@@ -1,15 +1,19 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React, { useCallback } from "react";
 import { Link } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import { EvilIcons } from "@expo/vector-icons";
 import { Shadow } from "react-native-shadow-2";
-
+import { auth } from "../config/firebase.config";
+import { useEffect } from "react";
 export default function index() {
   const [fontsLoaded, fontError] = useFonts({
     "original-Surfer": require("../assets/fonts/OriginalSurfer-Regular.ttf"),
   });
+  console.log(auth.currentUser);
+  useEffect(() => {
+    console.log("effect: ", auth.currentUser);
+  }, []);
   return (
     <View className="flex-1">
       <View className="min-h-[60%]  -mb-24 w-full z-30 ">
