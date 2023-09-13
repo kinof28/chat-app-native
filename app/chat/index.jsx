@@ -8,11 +8,8 @@ import {
   collection,
   addDoc,
   serverTimestamp,
-  doc,
   onSnapshot,
-  getDocs,
   query,
-  where,
   orderBy,
 } from "firebase/firestore";
 import { signOut } from "firebase/auth";

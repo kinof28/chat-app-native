@@ -4,8 +4,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import { EvilIcons } from "@expo/vector-icons";
 import { Shadow } from "react-native-shadow-2";
-import { auth } from "../config/firebase.config";
-import { useEffect } from "react";
 export default function index() {
   const [fontsLoaded, fontError] = useFonts({
     "original-Surfer": require("../assets/fonts/OriginalSurfer-Regular.ttf"),
